@@ -7,30 +7,27 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager PM;
 
-    public string turn;
-    public Text playerTurn;
-    public bool isWin,isDraw;
-    public string winner;
-    public GameObject[,] objs;
-    public int count;
-    public string[,] grid;
-    public GameObject[] buttons;
+    public string turn;//Current Player turn
+    public bool isWin;//Check the win status
+    public string winner; // to store winner string
+    public int count;// move count for each placment
+    public string[,] grid; //stores 3x3 array of the whole game element places
+    public GameObject[] buttons; //all buttons os 3x3 tic tac toe grid
 
-    public Sprite xImg, oImg;
+    public Sprite xImg, oImg;//Sprites for each button while placing
 
-    [Header("winner UI")]
-    public GameObject winnerUi;
-    public Text winText;
-
+    string player, comp;//store value related to player 1 and 2.
 
     private void Awake()
     {
         if (PM == null)
             PM = this;
         isWin = false;
-        grid = new string[3,3];        
+        grid = new string[3,3];
+        
     }
-    string player, comp;
+    
+
     private void Start()
     {
         float rand = Random.value;
@@ -51,15 +48,16 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (turn == "O")
-            playerTurn.text = "Player turn: " + "O";
-        else
-            playerTurn.text = "Player turn: " + "X";
-
-        if (Input.GetMouseButtonDown(1))
-            checkForWin();
+        
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            print("Medium Checking ");
+            computerTurnMedium();
+        }
+           
     }
 
+
+    //Check for win status of the game
     public void checkForWin()
     {
         if (!isWin)//Checking Horizontally
@@ -111,15 +109,13 @@ public class PlayerManager : MonoBehaviour
 
         if (isWin)
         {
-            winnerUi.SetActive(true);
-            winText.text = "Winner is " + winner;
+            UIManagerGamePlay.UMG.winUIMang();      
         }
         if (count == 9 && isWin == false)
         {
-            winnerUi.SetActive(true);
-            winText.text = "Tied! Play Again.";
+            UIManagerGamePlay.UMG.drawUIMang();
         }
-               
+        UIManagerGamePlay.UMG.setCurrTurnText();     
                 
     }
 
@@ -140,24 +136,10 @@ public class PlayerManager : MonoBehaviour
         int j1 = System.Int32.Parse(randPos[1]);
         placeElement(i1,j1);
     }
-    void placeElement(int x,int y)
-    {        
-        int index = (x + y) + (x * 2);
-        grid[x, y] = turn;
-        if (turn == "O")
-            buttons[index].GetComponent<Image>().sprite = oImg;
-        else
-            buttons[index].GetComponent<Image>().sprite = xImg;
-        if (turn == "O")
-            turn = "X";
-        else
-            turn = "O";
-        ++count;
-        checkForWin();
-    }
-
+  
     public void computerTurnMedium()
     {
+        bool isExe = false;
         //Computer check for win placement horizontally
         string[] elements = new string[3];
         for (int i = 0; i < 3; ++i)
@@ -178,49 +160,67 @@ public class PlayerManager : MonoBehaviour
            
         }
 
-        for (int j = 0; j < 3; ++j)
+        for (int j = 0; j < 3 && isExe==false; ++j)
         {
             if (elements[j] == comp)
             {
                 switch (j)
                 {
                     case 0:
-                        placeElement(j, 2);
+                        placeElement(j, 2); isExe = true;
                         break;
                     case 1:
-                        placeElement(j, 1);
+                        placeElement(j, 1); isExe = true;
                         break;
                     case 2:
-                        placeElement(j, 0);
-                        break;
-                }               
-            }
-            if (elements[j] == player)//if not breaking 
-            {
-                switch (j)
-                {
-                    case 0:
-                        placeElement(j, 2);
-                        break;
-                    case 1:
-                        placeElement(j, 1);
-                        break;
-                    case 2:
-                        placeElement(j, 0);
+                        placeElement(j, 0); isExe = true;
                         break;
                 }
+                
             }
-
+            
         }
+        for (int k = 0; k < 3 && isExe == false; ++k)
+        {
+            if (elements[k] == player)
+            {
+                switch (k)
+                {
+                    case 0:
+                        placeElement(k, 2); isExe = true;
+                        break;
+                    case 1:
+                        placeElement(k, 1); isExe = true;
+                        break;
+                    case 2:
+                        placeElement(k, 0); isExe = true;
+                        break;
+                }
+
+            }
+        }
+
         //Computer check for win placement vertically
 
 
     }
-    public void restartGame()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-    }
 
+    void placeElement(int x, int y)
+    {
+        int index = (x + y) + (x * 2);
+        grid[x, y] = turn;
+        if (turn == "O")
+            buttons[index].GetComponent<Image>().sprite = oImg;
+        else
+            buttons[index].GetComponent<Image>().sprite = xImg;
+        if (turn == "O")
+            turn = "X";
+        else
+            turn = "O";
+        ++count;
+        checkForWin();
+    }
+  
 
 
 }

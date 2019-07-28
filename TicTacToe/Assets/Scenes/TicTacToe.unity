@@ -1101,6 +1101,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657063543}
   m_CullTransparentMesh: 0
+--- !u!1 &662479755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662479757}
+  - component: {fileID: 662479756}
+  m_Layer: 0
+  m_Name: gameUiManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &662479756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662479755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e22c0626a124b428208c59c248feae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuScene: 0
+  gameScene: 1
+  winnerUI: {fileID: 1421215800}
+  winText: {fileID: 345614917}
+  currTurnText: {fileID: 864290120}
+--- !u!4 &662479757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662479755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0065142587, y: 1.8499615, z: -9.925524}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &864290118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,9 +1824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: 
-  playerTurn: {fileID: 864290120}
   isWin: 0
-  isDraw: 0
   winner: 
   count: 0
   buttons:
@@ -1793,8 +1839,6 @@ MonoBehaviour:
   - {fileID: 916723704}
   xImg: {fileID: 21300000, guid: 78e56628140e6524abbab6fcd98b70e9, type: 3}
   oImg: {fileID: 21300000, guid: 13a9ee4194b2d53419901bd2d7dfe619, type: 3}
-  winnerUi: {fileID: 1421215800}
-  winText: {fileID: 345614917}
 --- !u!4 &1271585673
 Transform:
   m_ObjectHideFlags: 0
@@ -2161,8 +2205,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1271585672}
-        m_MethodName: restartGame
+      - m_Target: {fileID: 662479756}
+        m_MethodName: homeButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

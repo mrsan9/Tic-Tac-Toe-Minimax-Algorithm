@@ -17,6 +17,23 @@ public class UIManagerMenu : MonoBehaviour
         SceneManager.LoadScene(menuScene);
     }
 
+
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(300, 340, 200, 150), "Easy"))
+        {
+            singlePlayer("easy");
+        }
+
+        if (GUI.Button(new Rect(300, 540, 200, 150), "Medium"))
+        {
+            singlePlayer("medium");
+        }
+        if (GUI.Button(new Rect(300, 740, 200, 150), "Hard"))
+        {
+            singlePlayer("hard");
+        }
+    }
     public void singlePlayer(string state)
     {
         switch (state)
@@ -34,6 +51,7 @@ public class UIManagerMenu : MonoBehaviour
                 PersistantManager.PM.currGameState = (PersistantManager.gameStates)4;
                 break;
         }
+        StartGameButton();
     }
 
     public void showLeaderboard(string board)

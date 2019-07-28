@@ -30,11 +30,22 @@ public class ButtonScript : MonoBehaviour
             PlayerManager.PM.turn = "X";
         else
             PlayerManager.PM.turn = "O";
-
+        
         PlayerManager.PM.count++;
         PlayerManager.PM.checkForWin();
-        if(PlayerManager.PM.count<9 && PlayerManager.PM.isWin == false)
-        PlayerManager.PM.computerTurnMedium();
+        if (PlayerManager.PM.count < 9 && PlayerManager.PM.isWin == false)
+        {
+            switch (PersistantManager.PM.currGameState)
+            {
+                case PersistantManager.gameStates.easy:
+                    PlayerManager.PM.computerTurnEasy();
+                    break;
+                case PersistantManager.gameStates.medium:
+                    PlayerManager.PM.computerTurnMedium();
+                    break;
+            }
+        }
+        
         
     }
 }

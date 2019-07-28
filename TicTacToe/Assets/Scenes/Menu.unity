@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 1089673310}
   - component: {fileID: 1089673309}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Persistant Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

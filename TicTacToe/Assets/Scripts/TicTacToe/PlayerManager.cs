@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
             player = "X";
             comp = "O";
         }
-       
+        UIManagerGamePlay.UMG.setCurrTurnText();
     }
 
     private void Update()
@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour
                 }
         }
 
-
+        print(count);
         if (!isWin)//Checking Vertically
         {
              for (int i = 0; i < 3; ++i)
@@ -136,71 +136,98 @@ public class PlayerManager : MonoBehaviour
         int j1 = System.Int32.Parse(randPos[1]);
         placeElement(i1,j1);
     }
-  
+
+
+    bool isMed;
     public void computerTurnMedium()
+    {       
+
+        if (count < 3)
+            computerTurnEasy();
+        else
+        {
+            isMed = false;
+            if(isMed == false)
+            medPlacement(comp);
+            if(isMed == false)
+            medPlacement(player);
+            if (isMed == false)
+            {
+                computerTurnEasy();
+                isMed = true;
+            }
+        }
+    }
+
+    void medPlacement(string t)
     {
-        bool isExe = false;
+        
         //Computer check for win placement horizontally
-        string[] elements = new string[3];
-        for (int i = 0; i < 3; ++i)
-        {
-            
-            if (grid[i, 0] == grid[i, 1] && !string.IsNullOrEmpty(grid[i,0]) && string.IsNullOrEmpty(grid[i, 2]))
+        if (isMed == false)
+            for (int i = 0; i < 3; ++i)
             {
-                elements[0] = grid[i, 0];
-            }
-            if (grid[i, 0] == grid[i, 2] && !string.IsNullOrEmpty(grid[i, 0]) && string.IsNullOrEmpty(grid[i, 1]))
-            {
-                elements[1] = grid[i, 2];
-            }
-            if (grid[i, 1] == grid[i, 2] && !string.IsNullOrEmpty(grid[i, 1]) && string.IsNullOrEmpty(grid[i, 0]))
-            {
-                elements[2] = grid[i, 1];
-            }
-           
-        }
-
-        for (int j = 0; j < 3 && isExe==false; ++j)
-        {
-            if (elements[j] == comp)
-            {
-                switch (j)
+                if (grid[i, 0] == grid[i, 1] && grid[i, 0] == t && string.IsNullOrEmpty(grid[i, 2]))
                 {
-                    case 0:
-                        placeElement(j, 2); isExe = true;
-                        break;
-                    case 1:
-                        placeElement(j, 1); isExe = true;
-                        break;
-                    case 2:
-                        placeElement(j, 0); isExe = true;
-                        break;
+                    placeElement(i, 2); isMed = true; break;
                 }
-                
-            }
-            
-        }
-        for (int k = 0; k < 3 && isExe == false; ++k)
-        {
-            if (elements[k] == player)
-            {
-                switch (k)
+                if (grid[i, 0] == grid[i, 2] && grid[i, 2] == t && string.IsNullOrEmpty(grid[i, 1]))
                 {
-                    case 0:
-                        placeElement(k, 2); isExe = true;
-                        break;
-                    case 1:
-                        placeElement(k, 1); isExe = true;
-                        break;
-                    case 2:
-                        placeElement(k, 0); isExe = true;
-                        break;
+                    placeElement(i, 1); isMed = true; break;
                 }
-
+                if (grid[i, 1] == grid[i, 2] && grid[i, 1] == t && string.IsNullOrEmpty(grid[i, 0]))
+                {
+                    placeElement(i, 0); isMed = true; break;
+                }
             }
-        }
 
         //Computer check for win placement vertically
+        if (isMed == false)
+            for (int i = 0; i < 3; ++i)
+            {
+                if (grid[0, i] == grid[1, i] && grid[0, i] == t && string.IsNullOrEmpty(grid[2, i]))
+                {
+                    placeElement(2, i); isMed = true; break;
+                }
+                if (grid[0, i] == grid[2, i] && grid[2, i] == t && string.IsNullOrEmpty(grid[1, i]))
+                {
+                    placeElement(1, i); isMed = true; break;
+                }
+                if (grid[1, i] == grid[2, i] && grid[1, i] == t && string.IsNullOrEmpty(grid[0, i]))
+                {
+                    placeElement(0, i); isMed = true; break;
+                }
+            }
+        //Computer check for win placement diagonally
+        if (isMed == false) {
+            if (grid[0, 0] == grid[1, 1] && grid[0, 0] == t && string.IsNullOrEmpty(grid[2, 2]))
+            {
+                placeElement(2, 2); isMed = true;
+            }
+            if (grid[0, 0] == grid[2, 2] && grid[0, 0] == t && string.IsNullOrEmpty(grid[1, 1]))
+            {
+                placeElement(1, 1); isMed = true;
+            }
+            if (grid[1, 1] == grid[2, 2] && grid[1, 1] == t && string.IsNullOrEmpty(grid[0, 0]))
+            {
+                placeElement(0, 0); isMed = true;
+            }
+        }
+        if (isMed == false)
+        {
+            if (grid[0, 2] == grid[1, 1] && grid[0, 2] == t && string.IsNullOrEmpty(grid[2, 0]))
+            {
+                placeElement(2, 0); isMed = true;
+            }
+            if (grid[0, 2] == grid[2, 0] && grid[0, 2] == t && string.IsNullOrEmpty(grid[1, 1]))
+            {
+                placeElement(1, 1); isMed = true;
+            }
+            if (grid[1, 1] == grid[2, 0] && grid[1, 1] == t && string.IsNullOrEmpty(grid[0, 2]))
+            {
+                placeElement(0, 2); isMed = true;
+            }
+        }
+
 
 
     }
